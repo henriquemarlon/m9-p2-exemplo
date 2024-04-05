@@ -4,24 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	MQTT "github.com/eclipse/paho.mqtt.golang"
-	"github.com/henriquemarlon/m9-p2/internal/infra/repository"
-	"github.com/henriquemarlon/m9-p2/internal/usecase"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"os"
 	"sort"
 	"testing"
 	"time"
+	MQTT "github.com/eclipse/paho.mqtt.golang"
+	"github.com/henriquemarlon/m9-p2/internal/infra/repository"
+	"github.com/henriquemarlon/m9-p2/internal/usecase"
 	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
-type DTO struct {
-	ID        string                 `json:"sensor_id"`
-	Data      map[string]interface{} `json:"data"`
-	Timestamp time.Time              `json:"timestamp"`
-}
 
 func TestMqttIntegration(t *testing.T) {
 	err := godotenv.Load("../config/.env")
@@ -43,9 +37,12 @@ func TestMqttIntegration(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var receipts []DTO
+
+	var receipts []usecase.CreateLogInputDTO
 	var timestamps []time.Time
 
+	findAllLogsRepository := repository.NewLogRepositoryMongo(mongoClient, "mongodb", "logs")
+	findAllLogsUsecase := usecase.NewFindAllLogsUseCase(findAllLogsRepository)
 	repository := repository.NewSensorRepositoryMongo(mongoClient, "mongodb", "sensors")
 	findAllSensorsUseCase := usecase.NewFindAllSensorsUseCase(repository)
 
@@ -66,7 +63,7 @@ func TestMqttIntegration(t *testing.T) {
 		if msg.Qos() != 1 {
 			t.Errorf("Expected QoS 1, got %d", msg.Qos())
 		}
-		var dto DTO
+		var dto usecase.CreateLogInputDTO
 		err := json.Unmarshal(msg.Payload(), &dto)
 		if err != nil {
 			t.Errorf("Error unmarshalling payload: %s", err)
@@ -77,7 +74,11 @@ func TestMqttIntegration(t *testing.T) {
 		}
 	}
 
-	opts := MQTT.NewClientOptions().AddBroker(fmt.Sprintf("tcp://localhost:%s", os.Getenv("BROKER_PORT"))).SetClientID("test-id")
+	opts := MQTT.NewClientOptions().AddBroker(
+		fmt.Sprintf("ssl://%s:%s", os.Getenv("BROKER_TLS_URL"),
+			os.Getenv("BROKER_PORT"))).SetUsername(
+		os.Getenv("BROKER_USERNAME")).SetPassword(
+		os.Getenv("BROKER_PASSWORD")).SetClientID("test-id")
 	opts.SetDefaultPublishHandler(handler)
 
 	mqttClient := MQTT.NewClient(opts)
@@ -87,7 +88,7 @@ func TestMqttIntegration(t *testing.T) {
 	}
 
 	go func() {
-		if token := mqttClient.Subscribe("sensors", 1, nil); token.Wait() && token.Error() != nil {
+		if token := mqttClient.Subscribe(os.Getenv("BROKER_TOPIC"), 1, nil); token.Wait() && token.Error() != nil {
 			fmt.Println(token.Error())
 			return
 		}
@@ -95,7 +96,29 @@ func TestMqttIntegration(t *testing.T) {
 
 	defer mqttClient.Disconnect(500)
 
-	time.Sleep(20 * time.Second)
+	time.Sleep(25 * time.Second)
+
+	logs, err := findAllLogsUsecase.Execute()
+	fmt.Printf("Logs: %v", logs)
+	if err != nil {
+		t.Errorf("Failed to find all logs: %v", err)
+	}
+	// if len(logs) < len(receipts) {
+	// 	t.Errorf("Persistence of logs less than expected %v", len(logs))
+	// }
+	// //verificar se os receipts estão entre os logs
+	for _, receipt := range receipts {
+		found := false
+		for _, log := range logs {
+			if receipt.ID == log.ID && receipt.Unit == log.Unit && receipt.Level == log.Level {
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Errorf("Receipt not found in logs: %v", receipt)
+		}
+	}
 
 	if len(receipts) < len(sensors) {
 		t.Errorf("Messages receipts received less than expected %v", len(receipts))
@@ -112,7 +135,7 @@ func TestMqttIntegration(t *testing.T) {
 				desiredDifference := 10 * time.Second
 				isLessThanOneMinutePlusError := totalDifference.Seconds()/float64(len(timestamps)-1) >= (desiredDifference.Seconds()-errorMargin.Seconds()) && totalDifference.Seconds()/float64(len(timestamps)-1) <= (desiredDifference.Seconds()+errorMargin.Seconds())
 				if !isLessThanOneMinutePlusError {
-					t.Error("No matching messages found with a valid timestamp difference")
+					t.Error("No matching messages found with a 1-minute timestamp difference")
 				}
 			}
 		}

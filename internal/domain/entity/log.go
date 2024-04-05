@@ -6,6 +6,7 @@ import (
 
 type LogRepository interface {
 	CreateLog(data *Log) error
+	FindAllLogs() ([]*Log, error)
 }
 
 type Log struct {

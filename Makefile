@@ -2,22 +2,12 @@
 START_LOG = @echo "======================================================= START OF LOG ========================================================="
 END_LOG = @echo "======================================================== END OF LOG =========================================================="
 
-tests-kafka:
-	@echo "Running the tests for Kafka"
+tests:
+	@echo "Running the tests for MQTT ans Messaging system"
 	@docker compose \
 		-f ./build/compose.yaml \
-		up simulation-mqtt --build -d
-	@go test ./test/integration_messaging_test.go -coverprofile=./tools/coverage_sheet.md -v
-	@docker compose \
-		-f ./build/compose.yaml \
-		down simulation-mqtt
-
-tests-mqtt:
-	@echo "Running the tests for MQTT"
-	@docker compose \
-		-f ./build/compose.yaml \
-		up simulation-mqtt --build -d
-	@go test ./test/integration_mqtt_test.go -coverprofile=./tools/coverage_sheet.md -v
+		up simulation --build -d
+	@go test ./... -coverprofile=./tools/coverage_sheet.md -v
 	@docker compose \
 		-f ./build/compose.yaml \
 		down simulation
