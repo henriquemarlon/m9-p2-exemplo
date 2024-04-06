@@ -55,7 +55,7 @@ func main() {
 	createSensorLogUseCase := usecase.NewLogUseCase(logRepository)
 
 	for msg := range msgChan {
-		fmt.Printf("Consumed message: %s\n", msg.Value)
+		// fmt.Printf("Consumed message: %s\n", msg.Value)
 		dto := usecase.CreateLogInputDTO{}
 		err := json.Unmarshal(msg.Value, &dto)
 		if err != nil {

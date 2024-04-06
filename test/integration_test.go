@@ -106,7 +106,6 @@ func TestMqttIntegration(t *testing.T) {
 		t.Errorf("Failed to find all logs: %v", err)
 	}
 	
-	// //verificar se os receipts estão entre os logs
 	for _, receipt := range receipts {
 		found := false
 		for _, log := range logs {

@@ -44,7 +44,7 @@ func main() {
 	var wg sync.WaitGroup
 	for _, sensor := range sensors {
 		wg.Add(1)
-		log.Printf("Starting sensor: %v", sensor)
+		// log.Printf("Starting sensor: %v", sensor)
 		go func(sensor usecase.FindAllSensorsOutputDTO) {
 			defer wg.Done()
 			opts := MQTT.NewClientOptions().AddBroker(
@@ -74,7 +74,7 @@ func main() {
 				}
  
 				token := client.Publish(os.Getenv("BROKER_TOPIC"), 1, false, string(jsonBytesPayload))
-				log.Printf("Published: %s, on topic: %s", string(jsonBytesPayload), os.Getenv("BROKER_TOPIC"))
+				// log.Printf("Published: %s, on topic: %s", string(jsonBytesPayload), os.Getenv("BROKER_TOPIC"))
 				token.Wait()
 				time.Sleep(10 * time.Second)
 			}
