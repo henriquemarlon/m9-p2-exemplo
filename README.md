@@ -101,11 +101,11 @@ consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8260: {"se
 ```
 
 > [!NOTE]
->  - Este comando está subindo todos os serviços presentes no arquivo compose.yml. São eles, o broker local, a simulação e a api-test que está sendo usada, por hora apenas para mostrar o log do que está sendo transmitido pela simulação.
+>  - Este comando está subindo todos os serviços presentes no arquivo compose.yml. São eles, a simulação e o consumer que está sendo usado, por hora, apenas para mostrar o log do que está sendo consumido pela simulação.
 
 #### Rodar a visualização da cobertura de testes:
 
-Novamente, todos os comandos necessários estão sendo abstraídos por um arquivo Makefile. Se você tiver curiosidade para saber o que o comando abaixo faz, basta conferir [aqui](https://github.com/Inteli-College/2024-T0002-EC09-G04/blob/main/backend/Makefile#L21).
+Novamente, todos os comandos necessários estão sendo abstraídos por um arquivo Makefile. Se você tiver curiosidade para saber o que o comando abaixo faz, basta conferir [aqui]().
 
 ###### Comando:
 
