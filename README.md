@@ -116,9 +116,12 @@ make coverage
 ###### Output:
 ![output_coverage](https://github.com/henriquemarlon/p1-m9/assets/89201795/4128b513-10bd-4200-8e06-285da5701830)
 
-#### Vídeo
-
 > [!NOTE]
 >  - Este comando está criando, a partir do arquivo `coverage_sheet.md`, uma visualização da cobertura de testes nos principais arquivos Go.
+
+#### Vídeo
+https://github.com/henriquemarlon/m9-p2-exemplo/assets/89201795/5274531e-50bf-4d63-859a-f63732289fd9
+
+
 
 [^1]: A estrutura de pastas escolhida para este projeto está de acordo com as convenções e padrões utilizados pela comunidade de desenvolvedores Golang.
