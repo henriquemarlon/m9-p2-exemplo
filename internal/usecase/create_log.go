@@ -12,7 +12,7 @@ type CreateLogUseCase struct {
 }
 
 type CreateLogInputDTO struct {
-	ID        string    `json:"sensor_id"`
+	Sensor_ID        string    `json:"sensor_id"`
 	Unit      string    `json:"unit"`
 	Level     float64   `json:"level"`
 	Timestamp time.Time `json:"timestamp"`
@@ -23,7 +23,7 @@ func NewLogUseCase(logRepository entity.LogRepository) *CreateLogUseCase {
 }
 
 func (c *CreateLogUseCase) Execute(input CreateLogInputDTO) error {
-	logData := entity.NewLog(input.ID, input.Unit, input.Level, input.Timestamp)
+	logData := entity.NewLog(input.Sensor_ID, input.Unit, input.Level, input.Timestamp)
 	err := c.LogRepository.CreateLog(logData)
 	if err != nil {
 		log.Printf("Error creating sensor log: %v", err)

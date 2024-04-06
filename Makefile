@@ -6,11 +6,11 @@ tests:
 	@echo "Running the tests for MQTT ans Messaging system"
 	@docker compose \
 		-f ./build/compose.yaml \
-		up simulation --build -d
+		up simulation consumer --build -d
 	@go test ./... -coverprofile=./tools/coverage_sheet.md -v
 	@docker compose \
 		-f ./build/compose.yaml \
-		down simulation
+		down simulation consumer
 
 .PHONY: env
 env:

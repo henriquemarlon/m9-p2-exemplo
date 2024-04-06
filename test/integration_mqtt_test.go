@@ -41,12 +41,13 @@ func TestMqttIntegration(t *testing.T) {
 	var receipts []usecase.CreateLogInputDTO
 	var timestamps []time.Time
 
-	findAllLogsRepository := repository.NewLogRepositoryMongo(mongoClient, "mongodb", "logs")
+	findAllLogsRepository := repository.NewLogRepositoryMongo(mongoClient, "mongodb", "sensors_log")
 	findAllLogsUsecase := usecase.NewFindAllLogsUseCase(findAllLogsRepository)
 	repository := repository.NewSensorRepositoryMongo(mongoClient, "mongodb", "sensors")
 	findAllSensorsUseCase := usecase.NewFindAllSensorsUseCase(repository)
 
 	sensors, err := findAllSensorsUseCase.Execute()
+	fmt.Printf("Found %d sensors\n", len(sensors))
 	if err != nil {
 		log.Fatalf("Failed to find all sensors: %v", err)
 	}
@@ -69,7 +70,8 @@ func TestMqttIntegration(t *testing.T) {
 			t.Errorf("Error unmarshalling payload: %s", err)
 		}
 		receipts = append(receipts, dto)
-		if dto.ID == firstSensorID {
+		fmt.Printf("Received message on topic %s: %s\n", msg.Topic(), msg.Payload())
+		if dto.Sensor_ID == firstSensorID {
 			timestamps = append(timestamps, dto.Timestamp)
 		}
 	}
@@ -96,21 +98,19 @@ func TestMqttIntegration(t *testing.T) {
 
 	defer mqttClient.Disconnect(500)
 
-	time.Sleep(25 * time.Second)
+	time.Sleep(120 * time.Second)
 
 	logs, err := findAllLogsUsecase.Execute()
 	fmt.Printf("Logs: %v", logs)
 	if err != nil {
 		t.Errorf("Failed to find all logs: %v", err)
 	}
-	// if len(logs) < len(receipts) {
-	// 	t.Errorf("Persistence of logs less than expected %v", len(logs))
-	// }
+	
 	// //verificar se os receipts estão entre os logs
 	for _, receipt := range receipts {
 		found := false
 		for _, log := range logs {
-			if receipt.ID == log.ID && receipt.Unit == log.Unit && receipt.Level == log.Level {
+			if receipt.Sensor_ID == log.ID && receipt.Unit == log.Unit && receipt.Level == log.Level {
 				found = true
 				break
 			}
