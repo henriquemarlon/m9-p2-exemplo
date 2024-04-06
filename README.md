@@ -75,46 +75,29 @@ make run
 ###### Output:
 
 ```shell
-subscriber-1    | ST-0 - Temperature: 4 ºC [OK Refrigerator] 
-subscriber-1    | ST-0 - Temperature: 3 ºC [OK Refrigerator] 
-subscriber-1    | ST-1 - Temperature: -19 ºC [OK Freezer] 
-subscriber-1    | ST-2 - Temperature: -20 ºC [OK Freezer] 
-subscriber-1    | ST-4 - Temperature: -14 ºC [ALERT High Temperature - Freezer] 
-subscriber-1    | ST-3 - Temperature: -20 ºC [OK Freezer] 
-subscriber-1    | ST-0 - Temperature: 9 ºC [OK Refrigerator] 
-subscriber-1    | ST-0 - Temperature: 3 ºC [OK Refrigerator] 
-subscriber-1    | ST-0 - Temperature: 8 ºC [OK Refrigerator] 
-subscriber-1    | ST-2 - Temperature: -18 ºC [OK Freezer] 
-subscriber-1    | ST-3 - Temperature: -23 ºC [OK Freezer] 
-subscriber-1    | ST-4 - Temperature: -21 ºC [OK Freezer] 
-subscriber-1    | ST-0 - Temperature: -16 ºC [OK Freezer] 
-subscriber-1    | ST-1 - Temperature: -26 ºC [ALERT Low Temperature - Freezer] 
-subscriber-1    | ST-0 - Temperature: 7 ºC [OK Refrigerator] 
-subscriber-1    | ST-1 - Temperature: -19 ºC [OK Freezer] 
-subscriber-1    | ST-3 - Temperature: -16 ºC [OK Freezer] 
-subscriber-1    | ST-2 - Temperature: -21 ºC [OK Freezer] 
-subscriber-1    | ST-4 - Temperature: -24 ºC [OK Freezer] 
-subscriber-1    | ST-0 - Temperature: 9 ºC [OK Refrigerator] 
-subscriber-1    | ST-0 - Temperature: 3 ºC [OK Refrigerator] 
-subscriber-1    | ST-4 - Temperature: -10 ºC [ALERT High Temperature - Freezer] 
-subscriber-1    | ST-1 - Temperature: -10 ºC [ALERT High Temperature - Freezer] 
-subscriber-1    | ST-2 - Temperature: -28 ºC [ALERT Low Temperature - Freezer] 
-subscriber-1    | ST-3 - Temperature: -22 ºC [OK Freezer] 
-subscriber-1    | ST-0 - Temperature: -22 ºC [OK Freezer] 
-subscriber-1    | ST-3 - Temperature: -24 ºC [OK Freezer] 
-subscriber-1    | ST-2 - Temperature: -29 ºC [ALERT Low Temperature - Freezer] 
-subscriber-1    | ST-1 - Temperature: -26 ºC [ALERT Low Temperature - Freezer] 
-subscriber-1    | ST-0 - Temperature: -27 ºC [ALERT Low Temperature - Freezer] 
-subscriber-1    | ST-0 - Temperature: 0 ºC [ALERT Low Temperature - Refrigerator] 
-subscriber-1    | ST-0 - Temperature: 12 ºC [ALERT High Temperature - Refrigerator] 
-subscriber-1    | ST-0 - Temperature: 11 ºC [ALERT High Temperature - Refrigerator] 
-subscriber-1    | ST-1 - Temperature: -12 ºC [ALERT High Temperature - Freezer] 
-subscriber-1    | ST-3 - Temperature: -19 ºC [OK Freezer] 
-subscriber-1    | ST-0 - Temperature: -19 ºC [OK Freezer] 
-subscriber-1    | ST-2 - Temperature: -29 ºC [ALERT Low Temperature - Freezer] 
-subscriber-1    | ST-4 - Temperature: -18 ºC [OK Freezer] 
-subscriber-1    | ST-0 - Temperature: 9 ºC [OK Refrigerator] 
-subscriber-1    | ST-0 - Temperature: 7 ºC [OK Refrigerator] 
+[+] Running 2/2
+ ✔ Container simulation  Recreated                                                                                     0.3s 
+ ✔ Container consumer    Recreated                                                                                     0.3s 
+Attaching to consumer, simulation
+simulation  | 2024/04/06 02:24:22 Selecting all Sensors from the MongoDB collection sensors
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8251: {"sensor_id":"660fbf475a93f408559f5cc6","unit":"PM2.5","level":15.792103948025987,"timestamp":"2024-04-06T02:24:23.826488282Z"}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8252: {"sensor_id":"660fbf475a93f408559f5cc7","unit":"PM2.5","level":84.25787106446776,"timestamp":"2024-04-06T02:24:23.823722097Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efc8")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8253: {"sensor_id":"660fbf475a93f408559f5cc3","unit":"PM2.5","level":12.793603198400799,"timestamp":"2024-04-06T02:24:23.836820516Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efc9")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8254: {"sensor_id":"660fbf475a93f408559f5cc5","unit":"PM2.5","level":61.76911544227887,"timestamp":"2024-04-06T02:24:23.842860643Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efca")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8255: {"sensor_id":"660fbf475a93f408559f5cc4","unit":"PM2.5","level":88.75562218890555,"timestamp":"2024-04-06T02:24:23.836500214Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efcb")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8256: {"sensor_id":"660fbf475a93f408559f5cc2","unit":"PM2.5","level":45.67716141929036,"timestamp":"2024-04-06T02:24:23.907274194Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efcc")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8257: {"sensor_id":"660fbf475a93f408559f5cc3","unit":"PM2.5","level":49.77511244377811,"timestamp":"2024-04-06T02:24:34.05660772Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efcd")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8258: {"sensor_id":"660fbf475a93f408559f5cc5","unit":"PM2.5","level":34.88255872063968,"timestamp":"2024-04-06T02:24:34.056739029Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efce")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8259: {"sensor_id":"660fbf475a93f408559f5cc6","unit":"PM2.5","level":76.9615192403798,"timestamp":"2024-04-06T02:24:34.056703831Z"}
+consumer    | 2024/04/06 02:24:50 Inserting log into the MongoDB collection with id: &{ObjectID("6610b272f4539a64d787efcf")}
+consumer    | 2024/04/06 02:24:50 Consuming message on qualidadeAr[4]@8260: {"sensor_id":"660fbf475a93f408559f5cc7","unit":"PM2.5","level":30.484757621189406,"timestamp":"2024-04-06T02:24:34.056794413Z"} 
 ```
 
 > [!NOTE]
