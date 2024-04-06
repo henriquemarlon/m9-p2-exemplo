@@ -47,9 +47,6 @@ migrations  | Connection to MongoDB closed.
 migrations exited with code 0
 ```
 
-> [!NOTE]
-> Em uma cenário real, não precisaríamos de um arquivo como esse porque os sensores seriam criados por um frontend+backend que inseriria no banco de dados dos sensores
-
 Abaixo estão as possíveis interações e as instruções de como realizá-las.
 
 #### Rodar testes:
