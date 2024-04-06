@@ -60,7 +60,7 @@ make test
 ```
 
 > [!NOTE]
-> - No meio do processo, é necessário subir um broker local para realizar os testes de transmissão de mensagens entre os tópicos.
+> - No meio do processo, é necessário subir a simulação e o consumer para realizar os testes de transmissão de mensagens, integradade e persistência.
 
 #### Rodar a sistema:
 
